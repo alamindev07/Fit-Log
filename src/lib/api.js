@@ -1,4 +1,4 @@
-export const API_URL = "https://api.abcz.workers.dev/api/fitlog";
+const API_URL = "https://api.abcz.workers.dev/api/fitlog";
 
 export async function getWorkouts() {
   const response = await fetch(API_URL);
@@ -7,7 +7,9 @@ export async function getWorkouts() {
     throw new Error("Failed to fetch workouts");
   }
 
-  return response.json();
+  const data = await response.json();
+
+  return data;
 }
 
 export async function getWorkoutById(id) {
@@ -17,5 +19,7 @@ export async function getWorkoutById(id) {
     throw new Error("Workout not found");
   }
 
-  return response.json();
+  const data = await response.json();
+
+  return data;
 }
