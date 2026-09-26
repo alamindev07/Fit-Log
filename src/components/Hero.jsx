@@ -27,9 +27,7 @@ const Hero = () => {
             </h1>
 
             <p className="mt-5 max-w-xl text-sm leading-6 text-zinc-400 sm:text-base">
-              Build a focused training routine with proven exercises,
-              clear instructions, and the right data to keep every
-              workout intentional.
+              FitLog is a dark, no-nonsense gym companion: pick a lift, lock it into today's plan, and watch the week's work add up.
             </p>
 
             <button
