@@ -1,3 +1,4 @@
+import Footer from "@/components/Footer";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import { FitLogProvider } from "@/context/FitLogContext";
@@ -16,6 +17,7 @@ export default function RootLayout({ children }) {
         <FitLogProvider>
           <Navbar />
           {children}
+          <Footer />
           <Toaster
             position="bottom-right"
             toastOptions={{
