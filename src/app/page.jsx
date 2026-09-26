@@ -1,8 +1,8 @@
-
 "use client";
 
 import { useEffect, useState } from "react";
 import Hero from "@/components/Hero";
+import WorkoutGrid from "@/components/WorkoutGrid";
 import { getWorkouts } from "@/lib/api";
 
 export default function Home() {
@@ -38,76 +38,67 @@ export default function Home() {
         id="library"
         className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8"
       >
-        <div className="border-b border-zinc-800 pb-5">
+        {/* Section Heading */}
+        <div className="mb-8 border-b border-zinc-800 pb-5">
           <p className="text-[10px] font-black uppercase tracking-[0.25em] text-[#ccff00]">
             Workout Collection
           </p>
 
-          <h2 className="mt-2 text-3xl font-black uppercase tracking-tight sm:text-4xl">
-            The Library
-          </h2>
+          <div className="mt-2 flex flex-col justify-between gap-3 sm:flex-row sm:items-end">
+            <div>
+              <h2 className="text-3xl font-black uppercase tracking-tight sm:text-4xl">
+                The Library
+              </h2>
 
-          <p className="mt-2 text-sm text-zinc-500">
-            Twelve lifts covering every major muscle group.
-          </p>
+              <p className="mt-2 text-sm text-zinc-500">
+                Twelve lifts covering every major muscle group.
+              </p>
+            </div>
+
+            {!loading && !error && (
+              <span className="text-[10px] font-bold uppercase tracking-widest text-zinc-600">
+                {workouts.length} Workouts
+              </span>
+            )}
+          </div>
         </div>
 
-        {/* API Status */}
-        <div className="mt-8">
-          {loading && (
-            <div className="flex min-h-[250px] items-center justify-center">
-              <div className="flex items-center gap-3">
-                <div className="h-5 w-5 animate-spin rounded-full border-2 border-zinc-700 border-t-[#ccff00]" />
+        {/* Loading */}
+        {loading && (
+          <div className="flex min-h-[300px] items-center justify-center border border-zinc-800 bg-[#101010]">
+            <div className="flex flex-col items-center gap-4">
+              <div className="h-7 w-7 animate-spin rounded-full border-2 border-zinc-700 border-t-[#ccff00]" />
 
-                <p className="text-xs font-bold uppercase tracking-widest text-zinc-500">
-                  Loading workouts...
-                </p>
-              </div>
+              <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-zinc-500">
+                Loading workouts...
+              </p>
             </div>
-          )}
+          </div>
+        )}
 
-          {!loading && error && (
-            <div className="flex min-h-[250px] items-center justify-center">
-              <div className="text-center">
-                <p className="text-sm font-bold text-red-400">
-                  {error}
-                </p>
+        {/* Error */}
+        {!loading && error && (
+          <div className="flex min-h-[300px] items-center justify-center border border-red-950 bg-[#101010]">
+            <div className="text-center">
+              <p className="text-sm font-bold text-red-400">
+                {error}
+              </p>
 
-                <button
-                  type="button"
-                  onClick={() => window.location.reload()}
-                  className="mt-4 bg-[#ccff00] px-4 py-2 text-xs font-black uppercase text-black"
-                >
-                  Try Again
-                </button>
-              </div>
+              <button
+                type="button"
+                onClick={() => window.location.reload()}
+                className="mt-4 bg-[#ccff00] px-4 py-2 text-[10px] font-black uppercase tracking-wider text-black transition hover:bg-[#dcff4d]"
+              >
+                Try Again
+              </button>
             </div>
-          )}
+          </div>
+        )}
 
-          {!loading && !error && (
-            <div className="border border-zinc-800 bg-[#101010] p-6">
-              <div className="flex items-center justify-between">
-                <p className="text-xs font-bold uppercase tracking-widest text-zinc-500">
-                  API Status
-                </p>
-
-                <span className="rounded-full bg-[#ccff00] px-3 py-1 text-[10px] font-black uppercase text-black">
-                  Connected
-                </span>
-              </div>
-
-              <div className="mt-6">
-                <p className="text-4xl font-black text-white">
-                  {workouts.length}
-                </p>
-
-                <p className="mt-1 text-xs uppercase tracking-wider text-zinc-500">
-                  Workouts loaded successfully
-                </p>
-              </div>
-            </div>
-          )}
-        </div>
+        {/* Workout Library */}
+        {!loading && !error && (
+          <WorkoutGrid workouts={workouts} />
+        )}
       </section>
     </main>
   );
