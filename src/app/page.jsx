@@ -1,18 +1,32 @@
+import Hero from "@/components/Hero";
+
 export default function Home() {
   return (
     <main className="min-h-screen bg-[#050505] text-white">
-      <section className="mx-auto flex min-h-[calc(100vh-64px)] max-w-7xl items-center justify-center px-4 sm:px-6 lg:px-8">
-        <div className="text-center">
-          <p className="mb-3 text-xs font-bold uppercase tracking-[0.3em] text-[#ccff00]">
-            Workout Library
+      <Hero />
+
+      {/* Temporary Library Anchor */}
+      <section
+        id="library"
+        className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8"
+      >
+        <div className="border-b border-zinc-800 pb-5">
+          <p className="text-[10px] font-black uppercase tracking-[0.25em] text-[#ccff00]">
+            Workout Collection
           </p>
 
-          <h1 className="text-4xl font-black tracking-tight sm:text-5xl lg:text-6xl">
-            FIT<span className="text-[#ccff00]">LOG</span>
-          </h1>
+          <h2 className="mt-2 text-3xl font-black uppercase tracking-tight sm:text-4xl">
+            The Library
+          </h2>
 
-          <p className="mt-4 text-sm text-zinc-500">
-            Train with intent. Log every set.
+          <p className="mt-2 text-sm text-zinc-500">
+            Twelve lifts covering every major muscle group.
+          </p>
+        </div>
+
+        <div className="flex min-h-[180px] items-center justify-center">
+          <p className="text-xs uppercase tracking-widest text-zinc-700">
+            Workout library coming next...
           </p>
         </div>
       </section>

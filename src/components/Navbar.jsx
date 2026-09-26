@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
@@ -29,20 +30,42 @@ const Navbar = () => {
   return (
     <header className="sticky top-0 z-50 border-b border-zinc-800/80 bg-[#050505]/95 backdrop-blur-md">
       <nav className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
-        {/* Logo */}
-        <Link
-          href="/"
-          onClick={closeMenu}
-          className="flex items-center gap-2"
-        >
-          <span className="flex h-7 w-7 items-center justify-center bg-[#ccff00] text-black">
-            <Dumbbell size={16} strokeWidth={2.5} />
-          </span>
 
-          <span className="text-lg font-black tracking-tight text-white">
-            FIT<span className="text-[#ccff00]">LOG</span>
-          </span>
-        </Link>
+{/* Logo */}
+<Link
+  href="/"
+  onClick={closeMenu}
+  className="group flex items-center gap-2 sm:gap-2.5 shrink-0"
+>
+  <Image
+    src="/logo.png"
+    alt="FitLog"
+    width={36}
+    height={36}
+    priority
+    className="
+      w-7 h-7
+      sm:w-8 sm:h-8
+      object-contain
+      transition-transform duration-200
+      group-hover:scale-105
+    "
+  />
+
+  <span
+    className="
+      text-[17px]
+      sm:text-[18px]
+      md:text-[19px]
+      font-extrabold
+      tracking-[0.04em]
+      text-white
+      leading-none
+    "
+  >
+    FITLOG
+  </span>
+</Link>
 
         {/* Desktop Navigation */}
         <div className="hidden items-center gap-1 md:flex">
