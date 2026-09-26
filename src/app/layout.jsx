@@ -19,7 +19,7 @@ export default function RootLayout({ children }) {
           {children}
           <Footer />
           <Toaster
-            position="bottom-right"
+            position="top-right"
             toastOptions={{
               duration: 2500,
               style: {
