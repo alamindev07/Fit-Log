@@ -1,6 +1,7 @@
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import { FitLogProvider } from "@/context/FitLogContext";
+import { Toaster } from "react-hot-toast";
 
 export const metadata = {
   title: "FitLog — Train With Intent",
@@ -15,6 +16,17 @@ export default function RootLayout({ children }) {
         <FitLogProvider>
           <Navbar />
           {children}
+          <Toaster
+            position="bottom-right"
+            toastOptions={{
+              duration: 2500,
+              style: {
+                background: "#101010",
+                color: "#ffffff",
+                border: "1px solid #27272a",
+              },
+            }}
+          />
         </FitLogProvider>
       </body>
     </html>
