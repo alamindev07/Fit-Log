@@ -3,19 +3,17 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import {
-  ArrowLeft,
-  Clock3,
-  Dumbbell,
-  Flame,
-  Star,
-} from "lucide-react";
+import { ArrowLeft, Clock3, Dumbbell, Flame, Star } from "lucide-react";
 import { useParams } from "next/navigation";
 import { getWorkoutById } from "@/lib/api";
+import toast from "react-hot-toast";
+import { useFitLog } from "@/context/FitLogContext";
 
 export default function WorkoutDetailsPage() {
   const params = useParams();
   const { id } = params;
+
+  const { addToPlan, saveWorkout } = useFitLog();
 
   const [workout, setWorkout] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -61,9 +59,7 @@ export default function WorkoutDetailsPage() {
     return (
       <main className="flex min-h-screen items-center justify-center bg-[#050505] px-4 text-white">
         <div className="text-center">
-          <p className="text-5xl font-black text-zinc-800">
-            404
-          </p>
+          <p className="text-5xl font-black text-zinc-800">404</p>
 
           <h1 className="mt-3 text-xl font-black uppercase">
             Workout Not Found
@@ -84,6 +80,26 @@ export default function WorkoutDetailsPage() {
       </main>
     );
   }
+
+  const handleAddToPlan = () => {
+    const added = addToPlan(workout);
+
+    if (added) {
+      toast.success("Workout added to today's plan");
+    } else {
+      toast.error("Workout is already in today's plan or plan is full");
+    }
+  };
+
+  const handleSaveWorkout = () => {
+    const saved = saveWorkout(workout);
+
+    if (saved) {
+      toast.success("Workout saved for later");
+    } else {
+      toast.error("Workout is already saved");
+    }
+  };
 
   return (
     <main className="min-h-screen bg-[#050505] text-white">
@@ -243,6 +259,7 @@ export default function WorkoutDetailsPage() {
             <div className="mt-8 grid gap-3 sm:grid-cols-2">
               <button
                 type="button"
+                onClick={handleAddToPlan}
                 className="bg-[#ccff00] px-5 py-4 text-[10px] font-black uppercase tracking-wider text-black transition hover:bg-[#dcff4d]"
               >
                 Add to Today's Plan
@@ -250,6 +267,7 @@ export default function WorkoutDetailsPage() {
 
               <button
                 type="button"
+                onClick={handleSaveWorkout}
                 className="border border-zinc-700 px-5 py-4 text-[10px] font-black uppercase tracking-wider text-white transition hover:border-[#ccff00] hover:text-[#ccff00]"
               >
                 Save for Later
