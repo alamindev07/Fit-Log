@@ -8,39 +8,56 @@ export function FitLogProvider({ children }) {
   const [todayPlan, setTodayPlan] = useState([]);
   const [savedWorkouts, setSavedWorkouts] = useState([]);
 
+  const [isHydrated, setIsHydrated] = useState(false);
+
+  // Load saved data from localStorage
   useEffect(() => {
-    const storedPlan = localStorage.getItem("fitlog-plan");
-    const storedSaved = localStorage.getItem("fitlog-saved");
+    try {
+      const storedPlan = localStorage.getItem("fitlog-plan");
+      const storedSaved = localStorage.getItem("fitlog-saved");
 
-    if (storedPlan) {
-      setTodayPlan(JSON.parse(storedPlan));
-    }
+      if (storedPlan) {
+        setTodayPlan(JSON.parse(storedPlan));
+      }
 
-    if (storedSaved) {
-      setSavedWorkouts(JSON.parse(storedSaved));
+      if (storedSaved) {
+        setSavedWorkouts(JSON.parse(storedSaved));
+      }
+    } catch (error) {
+      console.error("Failed to load FitLog data:", error);
+    } finally {
+      setIsHydrated(true);
     }
   }, []);
 
+  // Save today's plan
   useEffect(() => {
-    localStorage.setItem("fitlog-plan", JSON.stringify(todayPlan));
-  }, [todayPlan]);
+    if (!isHydrated) return;
 
+    localStorage.setItem(
+      "fitlog-plan",
+      JSON.stringify(todayPlan)
+    );
+  }, [todayPlan, isHydrated]);
+
+  // Save saved workouts
   useEffect(() => {
-    localStorage.setItem("fitlog-saved", JSON.stringify(savedWorkouts));
-  }, [savedWorkouts]);
+    if (!isHydrated) return;
+
+    localStorage.setItem(
+      "fitlog-saved",
+      JSON.stringify(savedWorkouts)
+    );
+  }, [savedWorkouts, isHydrated]);
 
   function addToPlan(workout) {
-    if (todayPlan.length >= 5) {
-      return false;
-    }
+    if (todayPlan.length >= 5) return false;
 
     const alreadyAdded = todayPlan.some(
       (item) => item.id === workout.id
     );
 
-    if (alreadyAdded) {
-      return false;
-    }
+    if (alreadyAdded) return false;
 
     setTodayPlan((previous) => [...previous, workout]);
 
@@ -64,11 +81,12 @@ export function FitLogProvider({ children }) {
       (item) => item.id === workout.id
     );
 
-    if (alreadySaved) {
-      return false;
-    }
+    if (alreadySaved) return false;
 
-    setSavedWorkouts((previous) => [...previous, workout]);
+    setSavedWorkouts((previous) => [
+      ...previous,
+      workout,
+    ]);
 
     return true;
   }
